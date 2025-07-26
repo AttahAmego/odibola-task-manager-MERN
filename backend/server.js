@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const connectDB = require('./config/db');
+const userRoutes = require('./routes/userRoutes');
 
 dotenv.config();
 connectDB();
@@ -17,6 +18,9 @@ app.get('/', (req, res) => {
 
 const taskRoutes = require('./routes/taskRoutes');
 app.use('/api/tasks', taskRoutes);
+
+// Add this below your other app.use
+app.use('/api/users', userRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
