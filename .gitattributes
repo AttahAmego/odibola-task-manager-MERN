@@ -10,3 +10,5 @@
 *.md text
 *.yml text
 *.env text
+*.js text eol=lf
+*.json text eol=lf
