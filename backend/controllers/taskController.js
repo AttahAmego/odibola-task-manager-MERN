@@ -3,12 +3,12 @@ const Task = require('../models/Task');
 // @desc Create Task
 exports.createTask = async (req, res) => {
   try {
-    const { title, description } = req.body;
+    const { title, deadline } = req.body;
 
     const task = await Task.create({
       title,
-      description,
-      user: req.user.id, // associate with logged-in user
+      deadline,
+      user: req.user.id,
     });
 
     res.status(201).json(task);
@@ -16,6 +16,7 @@ exports.createTask = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 // @desc Get All Tasks
 exports.getTasks = async (req, res) => {
