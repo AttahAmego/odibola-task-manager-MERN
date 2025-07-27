@@ -3,9 +3,11 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 export default defineConfig({
+  base: './', // ✅ Crucial for relative paths on static hosts like Render
   plugins: [react()],
-  root: '.', // Use current folder as root
+  root: '.', // Still fine
   build: {
-    outDir: 'build', // Required for Render deploy
+    outDir: 'build', // ✅ Good for Render
   },
 })
+
