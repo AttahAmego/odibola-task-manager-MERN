@@ -18,15 +18,38 @@ exports.createTask = async (req, res) => {
 };
 
 
-// @desc Get All Tasks
+// @desc Get All Tasks with Filter, Sort & Search
 exports.getTasks = async (req, res) => {
   try {
-    const tasks = await Task.find({ user: req.user.id }); // Only tasks created by the logged-in user
+    const { status, sortBy, search } = req.query;
+    const query = { user: req.user.id }; // Always filter by the logged-in user
+
+    if (status) query.status = status;
+
+    if (search) {
+      query.$or = [
+        { title: { $regex: search, $options: 'i' } },
+        { description: { $regex: search, $options: 'i' } }
+      ];
+    }
+
+    let tasksQuery = Task.find(query);
+
+    if (sortBy === 'deadline') {
+      tasksQuery = tasksQuery.sort({ deadline: 1 }); // ascending
+    } else if (sortBy === 'priority') {
+      tasksQuery = tasksQuery.sort({ priority: -1 }); // descending
+    } else {
+      tasksQuery = tasksQuery.sort({ createdAt: -1 }); // default: most recent first
+    }
+
+    const tasks = await tasksQuery;
     res.status(200).json(tasks);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 // @desc Update Task
 exports.updateTask = async (req, res) => {
