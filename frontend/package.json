@@ -8,7 +8,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "start": "serve -s dist"
+    "start": "npx serve -s build"
   },
   "keywords": [],
   "author": "",
