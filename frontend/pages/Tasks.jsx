@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import TaskCard from "/GOMYCODE/odibola-task-manager-MERN/frontend/pages/TaskCard";
+import TaskCard from "./TaskCard";
 
 const Tasks = () => {
   const [title, setTitle] = useState("");
@@ -10,7 +10,7 @@ const Tasks = () => {
   const [sortBy, setSortBy] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
 
-  const API_URL = process.env.REACT_APP_API_URL;
+  const API_URL = import.meta.env.VITE_API_URL;
   const token = localStorage.getItem("token");
 
   useEffect(() => {
